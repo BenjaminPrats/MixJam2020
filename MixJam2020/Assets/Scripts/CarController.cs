@@ -8,6 +8,7 @@ public class CarController : MonoBehaviour
     public Transform _cameraTarget;
     public Transform _rayCheckPoint;
     public LayerMask _groundMask;
+    public BoostBar _boostBar;
 
     public float _forwardAcceleration = 10.0f;
     public float _reverseAcceleration = 5.0f;
@@ -53,6 +54,7 @@ public class CarController : MonoBehaviour
         _accelerationInput = verticalInput > 0.0f ? verticalInput * _forwardAcceleration :
                              verticalInput < 0.0f ? verticalInput * _reverseAcceleration : 0.0f;
 
+        _boostBar.SetSlider(_boostLevel);
         _isBoostActived = (Input.GetButton("Jump") && _boostLevel > 0.0f) ? true : false;
 
         //if ()
