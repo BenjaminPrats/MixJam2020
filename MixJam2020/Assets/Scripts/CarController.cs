@@ -158,9 +158,14 @@ public class CarController : MonoBehaviour
             float smoothnessFactor = 1.0f / (hit.distance / _lengthNormalRotationCheck);
             if (smoothnessFactor > _smoothNormalRotationMax)
                 smoothnessFactor = _smoothNormalRotationMax;
-            // car perpendicular to road
-            Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, smoothnessFactor);
+
+            float slopePercent = 1.0f - Mathf.Abs(Vector3.Dot(hit.normal.normalized, Vector3.up));
+            if (slopePercent < 0.4f)
+            {
+                // car perpendicular to road
+                Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, smoothnessFactor);
+            }
         }
 
     }
