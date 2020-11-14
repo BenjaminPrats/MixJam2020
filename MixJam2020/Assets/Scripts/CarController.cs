@@ -81,7 +81,7 @@ public class CarController : MonoBehaviour
         // Update car transform
         if (_isGrounded || _isBoostActived)
         {
-            float verticalFactor = verticalInput < 0.01f && _isBoostActived ? 1.0f : verticalInput; 
+            float verticalFactor = verticalInput < 0.01f && (_isBoostActived || _rb.velocity.sqrMagnitude > 1.0f) ? 1.0f : verticalInput; 
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0.0f, _rotationInput * _rotationStrength * Time.deltaTime * verticalFactor, 0.0f));
         }
 
