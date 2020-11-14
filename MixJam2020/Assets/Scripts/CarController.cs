@@ -9,7 +9,9 @@ public class CarController : MonoBehaviour
     public Transform _rayGroundCheckPoint;
     public Transform _raySlopeCheckPoint;
     public LayerMask _groundMask;
+    public LayerMask _terrainMask;
     public BoostBar _boostBar;
+    public ScoreManager _scoreManager;
 
     [Space(10)]
     public float _accelerationFactor = 10.0f;
@@ -120,15 +122,18 @@ public class CarController : MonoBehaviour
         {
             _rb.drag = _isGrounded ? _dragGround : _dragAir;
         }
-
-        Vector3 forwardDirection = transform.forward;
+        
         float wrongRotation = Mathf.Abs(Vector3.Dot(hit.normal, transform.forward)); // If == 0.0f => Best (car perpendicular too the road)
         if (_isGrounded && wrongRotation < 0.4f)
         {
-            float dot = Vector3.Dot(hit.normal, Vector3.up);
-            Debug.Log(forwardDirection);
-            forwardDirection.y *= (dot * dot * dot * dot); // avoid driving on 85 degree slope
-
+            Vector3 forwardDirection = transform.forward;
+            // avoid driving on 85 degree slope on terrain
+            if (hit.collider.gameObject.layer == _terrainMask)
+            {
+                float dot = Vector3.Dot(hit.normal, Vector3.up);
+                Debug.Log(forwardDirection);
+                forwardDirection.y *= (dot * dot * dot * dot); 
+            }
             // float slopeFactor = transform.forward
             // if ()
 
