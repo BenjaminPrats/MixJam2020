@@ -99,6 +99,7 @@ public class CarController : MonoBehaviour
     private void FixedUpdate()
     {
         bool isGroundedOld = _isGrounded;
+
         RaycastHit hit;
         if (Physics.Raycast(_rayGroundCheckPoint.position, -transform.up, out hit, _groundRayCheckLength, _groundMask))
         {
@@ -120,11 +121,22 @@ public class CarController : MonoBehaviour
             _rb.drag = _isGrounded ? _dragGround : _dragAir;
         }
 
-        if (_isGrounded)
+        Vector3 forwardDirection = transform.forward;
+        float wrongRotation = Mathf.Abs(Vector3.Dot(hit.normal, transform.forward)); // If == 0.0f => Best (car perpendicular too the road)
+        if (_isGrounded && wrongRotation < 0.4f)
         {
-            if (_accelerationInput != 0.0f)
-                _rb.AddForce(transform.forward * _accelerationInput * _accelerationFactor);
+            float dot = Vector3.Dot(hit.normal, Vector3.up);
+            Debug.Log(forwardDirection);
+            forwardDirection.y *= (dot * dot * dot * dot); // avoid driving on 85 degree slope
 
+            // float slopeFactor = transform.forward
+            // if ()
+
+
+            if (_accelerationInput != 0.0f)
+                _rb.AddForce(forwardDirection.normalized * _accelerationInput * _accelerationFactor);
+
+            
             //float dot = Vector3.Dot(transform.up, Vector3.up);
             //if (dot < 0.7f)
             //{
@@ -137,7 +149,10 @@ public class CarController : MonoBehaviour
         else
         {
             if (_rb.velocity.y < 0.0f)
+            {
+//                Debug.Log("Go down!");
                 _rb.AddForce(Vector3.down * _gravityStrength);
+            }
         }
 
         if (_isBoostActivated)
