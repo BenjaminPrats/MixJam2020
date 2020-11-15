@@ -12,6 +12,7 @@ public class CarController : MonoBehaviour
     public LayerMask _terrainMask;
     public BoostBar _boostBar;
     public ScoreManager _scoreManager;
+    public CheckpointManager _checkpointManager;
 
     [Space(10)]
     public float _accelerationFactor = 10.0f;
@@ -207,7 +208,11 @@ public class CarController : MonoBehaviour
         return _rotationInput;
     }
 
-
+    public void Died()
+    {
+        Debug.Log("Died!");
+        _checkpointManager.Respawn();
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

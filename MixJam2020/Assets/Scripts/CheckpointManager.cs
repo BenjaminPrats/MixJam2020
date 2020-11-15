@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
+    public int _startAtCheckpoint = -1;
+
+    [Space(10)]
     public GameObject _playerCam;
     public GameObject _sphere;
     public GameObject _car;
+
     public Checkpoint[] checkpoints;
 
     private int _latestCheckpointId = 0;
@@ -25,6 +29,11 @@ public class CheckpointManager : MonoBehaviour
         {
             checkpoints[i].Changed += SetLatest;
         }
+
+#if UNITY_EDITOR
+        if (_startAtCheckpoint > 0 && _startAtCheckpoint < checkpoints.Length)
+            Respawn(_startAtCheckpoint);
+#endif
     }
 
     // Update is called once per frame
@@ -32,23 +41,33 @@ public class CheckpointManager : MonoBehaviour
     {
         if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
         {
-            Debug.Log("Go back to the latest checkpoint");
-            Transform newtransform = checkpoints[_latestCheckpointId].GetSpawnTransform();
-
-            //_sphere.transform.parent = _player.transform;
-            _sphere.GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-            _sphere.transform.position = newtransform.position;
-            _sphere.transform.rotation = newtransform.rotation;
-
-            _playerCam.transform.position = newtransform.position;
-            _playerCam.transform.rotation = newtransform.rotation;
-
-            _car.transform.rotation = newtransform.rotation;
-
-
-            //_sphere.transform.parent = null;
+            Respawn();
         }
+    }
+
+    public void Respawn()
+    {
+        Respawn(_latestCheckpointId);
+    }
+
+    public void Respawn(int i)
+    {
+        Transform newtransform = checkpoints[i].GetSpawnTransform();
+        Debug.Log("Go back to checkpoint " + i);
+
+        //_sphere.transform.parent = _player.transform;
+        _sphere.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        _sphere.transform.position = newtransform.position;
+        _sphere.transform.rotation = newtransform.rotation;
+
+        _playerCam.transform.position = newtransform.position;
+        _playerCam.transform.rotation = newtransform.rotation;
+
+        _car.transform.rotation = newtransform.rotation;
+
+
+        //_sphere.transform.parent = null;
     }
 
     private void SetLatest(int i)
