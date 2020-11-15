@@ -5,6 +5,7 @@ using UnityEngine;
 public class CheckpointManager : MonoBehaviour
 {
     public int _startAtCheckpoint = -1;
+    public GameObject _deathMenu;
 
     [Space(10)]
     public GameObject _playerCam;
@@ -41,6 +42,7 @@ public class CheckpointManager : MonoBehaviour
     {
         if (Input.GetKeyDown("enter") || Input.GetKeyDown("return"))
         {
+            _deathMenu.SetActive(false);
             Respawn();
         }
     }

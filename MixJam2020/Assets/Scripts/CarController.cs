@@ -13,6 +13,8 @@ public class CarController : MonoBehaviour
     public BoostBar _boostBar;
     public ScoreManager _scoreManager;
     public CheckpointManager _checkpointManager;
+    public GameObject _deathMenu;
+    //    public DeathPause _
 
     [Space(10)]
     public float _accelerationFactor = 10.0f;
@@ -211,8 +213,10 @@ public class CarController : MonoBehaviour
     public void Died()
     {
         Debug.Log("Died!");
-        _checkpointManager.Respawn();
+        _deathMenu.SetActive(true);
+        // _checkpointManager.Respawn();
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
