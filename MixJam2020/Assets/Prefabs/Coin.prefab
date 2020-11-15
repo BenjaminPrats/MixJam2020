@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3536998245686029970}
   - component: {fileID: 3536998245686029969}
   - component: {fileID: 3536998245686029981}
-  - component: {fileID: 3536998245686029980}
+  - component: {fileID: 795215692984298722}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: bc875ad786d809b4a81e8bc30d9d0b9b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationStep: 0.5
---- !u!114 &3536998245686029980
+--- !u!114 &795215692984298722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,9 +120,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3536998245686029975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46b5e9fdd7d3e9e4c9d3ef2c9d8418e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 12ac919ff07e5b841875e4794cc69942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _reloadAmount: 0
+  itemType: 3
 --- !u!1 &3536998245776315872
 GameObject:
   m_ObjectHideFlags: 0

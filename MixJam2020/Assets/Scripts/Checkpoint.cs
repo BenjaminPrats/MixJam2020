@@ -28,7 +28,7 @@ public class Checkpoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         CarController carController = other.gameObject.transform.parent.gameObject.GetComponent<CarController>();
-        if (carController)
+        if (carController != null)
         {
             SetActive(true);
         }
